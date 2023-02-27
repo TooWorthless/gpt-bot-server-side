@@ -14,16 +14,6 @@ const email = process.env.OPENAI_EMAIL;
 const password = process.env.OPENAI_PASSWORD;
 
 
-const api = new ChatGPTAPIBrowser({
-    email,
-    password,
-    debug: false,
-    minimize: true
-});
-
-await api.initSession();
-
-
 
 
 const app = express();
@@ -36,9 +26,17 @@ app.post('/', express.json(), async (req, res) =>
     {
         console.log(req.body);
         try {
+            const api = new ChatGPTAPIBrowser({
+                email,
+                password,
+                debug: false,
+                minimize: true
+            });
+            
+            await api.initSession();
             let gptResponse = await api.sendMessage(req.body.message);
 
-            
+            api.closeSession();
             res.status(200).send(gptResponse.response);
         }
         catch(err) {
