@@ -1,6 +1,7 @@
 import express from "express";
 import { ChatGPTAPIBrowser } from "chatgptx-browser";
 import dotenv from "dotenv";
+import "unfetch/polyfill";
 
 
 
